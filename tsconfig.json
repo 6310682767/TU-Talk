@@ -1,0 +1,14 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@screens/*": ["screens/*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"]
+    },
+    "strict": true,
+    "moduleResolution": "node",
+    "module": "esnext"
+  }
+}
