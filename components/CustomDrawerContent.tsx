@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useCampus } from '../contexts/CampusContext';
+import { useForum } from '../contexts/ForumContext';
 
 const campuses = [
-  { name: 'รังสิต', },
-  { name: 'ท่าพระจันทร์', },
-  { name: 'ลำปาง', },
-  { name: 'พัทยา', },
+  { name: 'รังสิต' },
+  { name: 'ท่าพระจันทร์' },
+  { name: 'ลำปาง' },
+  { name: 'พัทยา' },
 ];
 
 const categories = [
@@ -21,81 +21,83 @@ const categories = [
   { name: 'ข่าวสาร', icon: 'newspaper-variant-outline' },
   { name: 'ฝึกงาน/สหกิจ', icon: 'briefcase-variant-outline' },
   { name: 'กิจกรรม/ชมรม', icon: 'account-group' },
-  
-
 ];
 
 export default function CustomDrawerContent(props) {
-    const { campus: selectedCampus, setCampus: setSelectedCampus } = useCampus();
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  const {
+    campus: selectedCampus,
+    category: selectedCategory,
+    setCampus: setSelectedCampus,
+    setCategory: setSelectedCategory,
+  } = useForum();
+
+  const handleSelectCampus = (campus: string) => {
+    if (campus !== selectedCampus) {
+      setSelectedCampus(campus);
+    }
+  };
   
-    const handleSelectCategory = (category: string) => {
-      setSelectedCategory(prev => (prev === category ? null : category));
-      // TODO: add category filter logic
-    };
-  
-    const handleSelectCampus = (campus: string) => {
-      if (campus !== selectedCampus) {
-        setSelectedCampus(campus);
-        // TODO: add logic if needed when changing campus
-      }
-    };
-  
-    return (
-      <DrawerContentScrollView {...props}>
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>เลือกวิทยาเขต</Text>
-          <View style={styles.buttonContainer}>
-            {campuses.map((campus) => (
-              <TouchableOpacity
-                key={campus.name}
-                onPress={() => handleSelectCampus(campus.name)}
+  const handleSelectCategory = (category: string) => {
+    setSelectedCategory(prev => (prev === category ? null : category));
+  };
+
+  return (
+    <DrawerContentScrollView {...props}>
+      <View style={styles.container}>
+        <Text style={styles.sectionTitle}>วิทยาเขต</Text>
+        <View style={styles.buttonContainer}>
+          {campuses.map((campus) => (
+            <TouchableOpacity
+              key={campus.name}
+              onPress={() => handleSelectCampus(campus.name)}
+              style={[
+                styles.button,
+                selectedCampus === campus.name && styles.buttonSelected,
+              ]}
+            >
+              <Text
                 style={[
-                  styles.button,
-                  selectedCampus === campus.name && styles.buttonSelected,
+                  styles.buttonText,
+                  selectedCampus === campus.name && styles.selectedText,
                 ]}
               >
+                {campus.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <View style={styles.divider} />
+
+        <Text style={styles.sectionTitle}>หมวดหมู่ฟอรั่ม</Text>
+        <View style={styles.buttonContainer}>
+          {categories.map((category) => {
+            const selected = selectedCategory === category.name;
+            return (
+              <TouchableOpacity
+                key={category.name}
+                onPress={() => handleSelectCategory(category.name)}
+                style={[styles.button, selected && styles.buttonSelected]}
+              >
+                <MaterialCommunityIcons
+                  name={category.icon}
+                  size={24}
+                  color={selected ? '#fff' : '#000'}
+                  style={styles.icon}
+                />
                 <Text
-                  style={[
-                    styles.buttonText,
-                    selectedCampus === campus.name && styles.selectedText,
-                  ]}
+                  style={[styles.buttonText, selected && styles.selectedText]}
                 >
-                  {campus.name}
+                  {category.name}
                 </Text>
               </TouchableOpacity>
-            ))}
-          </View>
-  
-          <View style={styles.divider} />
-  
-          <Text style={styles.sectionTitle}>หมวดหมู่ฟอรั่ม</Text>
-          <View style={styles.buttonContainer}>
-            {categories.map((category) => {
-              const selected = selectedCategory === category.name;
-              return (
-                <TouchableOpacity
-                  key={category.name}
-                  onPress={() => handleSelectCategory(category.name)}
-                  style={[styles.button, selected && styles.buttonSelected]}
-                >
-                  <MaterialCommunityIcons
-                    name={category.icon}
-                    size={28}
-                    color={selected ? '#fff' : '#000'}
-                    style={styles.icon}
-                  />
-                  <Text style={[styles.buttonText, selected && styles.selectedText]}>
-                    {category.name}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+            );
+          })}
         </View>
-      </DrawerContentScrollView>
-    );
-  }
+      </View>
+    </DrawerContentScrollView>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -103,32 +105,26 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontFamily: 'NotoSansThai-Regular',
-    fontSize: 30,
+    fontSize: 24,
     marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   buttonContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
   },
   button: {
+    marginRight: 10,
+    marginBottom: 10,
     alignItems: 'center',
     backgroundColor: '#F0F0F0',
     borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 14,
-    marginRight: 0,
-    marginBottom: 5,
-    alignSelf: 'flex-start',
-    flexDirection: 'row', // Align icon and text horizontally
-    justifyContent: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
   },
   buttonSelected: {
     backgroundColor: '#D84A34',
-  },
-  icon: {
-    marginRight: 6, // Space between icon and text
   },
   buttonText: {
     fontFamily: 'NotoSansThai-Regular',
@@ -136,7 +132,10 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   selectedText: {
-    color: '#fff', // Change text color when selected
+    color: '#fff',
+  },
+  icon: {
+    marginRight: 6,
   },
   divider: {
     height: 1,

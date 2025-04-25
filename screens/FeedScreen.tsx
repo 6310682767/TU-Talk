@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer'; // นำเข้า DrawerNavigationProp
 import { styles } from '../styles/feedScreenStyles';
+import { useForum } from '../contexts/ForumContext';
+import { RootDrawerParamList } from 'types'; 
 
-const FeedScreen = () => {
-  const navigation = useNavigation();
+// กำหนดประเภทของ navigation
+type FeedScreenNavigationProp = DrawerNavigationProp<RootDrawerParamList, 'Feed'>;
+
+const FeedScreen: React.FC = () => {
+  const navigation = useNavigation<FeedScreenNavigationProp>(); // ใช้ประเภท DrawerNavigationProp
+  const { campus, category } = useForum();
+
+  useEffect(() => {
+    fetchFeedData(campus, category); 
+  }, [campus, category]);
+
+  const fetchFeedData = async (campus: string, category: string | null) => {
+    // ดึงข้อมูลจาก backend/filter ตาม campus + category
+    console.log('Reload feed with:', campus, category);
+  };
 
   return (
     <View style={{ flex: 1 }}>

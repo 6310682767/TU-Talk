@@ -1,4 +1,3 @@
-// src/screens/LoginScreen.tsx
 import React, { useState } from 'react';
 import {
   Text,
@@ -11,12 +10,17 @@ import {
 } from 'react-native';
 import { styles } from '@styles/loginStyles';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack'; 
+import { RootStackParamList } from 'types';
+
+// กำหนดประเภทของ navigation
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const LoginScreen = () => {
   const [studentId, setStudentId] = useState('');
   const [citizenId, setCitizenId] = useState('');
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<LoginScreenNavigationProp>(); // ใช้ประเภท StackNavigationProp
 
   const handleLogin = async () => {
     if (!studentId || !citizenId) {
@@ -47,7 +51,6 @@ const LoginScreen = () => {
         console.log('Response data:', data);
         // alert(`ยินดีต้อนรับ ${data.displayname_th}`);
         navigation.navigate('CampusSelect'); // นำทางไปหน้าเลือกวิทยาเขต
-        
       } else {
         const errData = await response.json();
         alert(errData.message || 'เข้าสู่ระบบไม่สำเร็จ');

@@ -1,3 +1,4 @@
+// App.tsx
 import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,9 +7,11 @@ import LoginScreen from './screens/LoginScreen';
 import CampusSelectScreen from './screens/CampusSelectScreen';
 import SetDisplayNameScreen from './screens/SetDisplayNameScreen';
 import MainDrawerNavigator from './navigation/MainDrawerNavigator';
-import { CampusProvider } from './contexts/CampusContext'; 
+import { CampusProvider } from './contexts/CampusContext';
+import { ForumProvider } from './contexts/ForumContext';
+import { RootStackParamList } from 'types'; 
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>(); 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,14 +33,16 @@ const App = () => {
 
   return (
     <CampusProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={isLoggedIn ? 'MainApp' : 'Login'}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="CampusSelect" component={CampusSelectScreen} />
-          <Stack.Screen name="SetDisplayName" component={SetDisplayNameScreen} />
-          <Stack.Screen name="MainApp" component={MainDrawerNavigator} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ForumProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={isLoggedIn ? 'MainApp' : 'Login'}>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="CampusSelect" component={CampusSelectScreen} />
+            <Stack.Screen name="SetDisplayName" component={SetDisplayNameScreen} />
+            <Stack.Screen name="MainApp" component={MainDrawerNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ForumProvider>
     </CampusProvider>
   );
 };
