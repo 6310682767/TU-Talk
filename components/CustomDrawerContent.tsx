@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useCampus } from '../contexts/CampusContext';
 
 const campuses = [
   { name: 'รังสิต', },
@@ -18,7 +19,6 @@ const categories = [
   { name: 'ตามหาของหาย', icon: 'magnify' },
   { name: 'ร้านเด็ดในมอ', icon: 'silverware-fork-knife' },
   { name: 'ข่าวสาร', icon: 'newspaper-variant-outline' },
-  
   { name: 'ฝึกงาน/สหกิจ', icon: 'briefcase-variant-outline' },
   { name: 'กิจกรรม/ชมรม', icon: 'account-group' },
   
@@ -26,54 +26,76 @@ const categories = [
 ];
 
 export default function CustomDrawerContent(props) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const handleSelectCategory = (category: string) => {
-    setSelectedCategory(prev => (prev === category ? null : category));
-    // trigger filter logic here
-  };
-
-  return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.container}>
-        <Text style={styles.sectionTitle}>เลือกวิทยาเขต</Text>
-        <View style={styles.buttonContainer}>
-          {campuses.map((campus) => (
-            <TouchableOpacity key={campus.name} style={styles.button}>
-              <Text style={styles.buttonText}>{campus.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View style={styles.divider} />
-
-        <Text style={styles.sectionTitle}>หมวดหมู่ฟอรั่ม</Text>
-        <View style={styles.buttonContainer}>
-          {categories.map((category) => {
-            const selected = selectedCategory === category.name;
-            return (
+    const { campus: selectedCampus, setCampus: setSelectedCampus } = useCampus();
+    const [selectedCategory, setSelectedCategory] = useState(null);
+  
+    const handleSelectCategory = (category: string) => {
+      setSelectedCategory(prev => (prev === category ? null : category));
+      // TODO: add category filter logic
+    };
+  
+    const handleSelectCampus = (campus: string) => {
+      if (campus !== selectedCampus) {
+        setSelectedCampus(campus);
+        // TODO: add logic if needed when changing campus
+      }
+    };
+  
+    return (
+      <DrawerContentScrollView {...props}>
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>เลือกวิทยาเขต</Text>
+          <View style={styles.buttonContainer}>
+            {campuses.map((campus) => (
               <TouchableOpacity
-                key={category.name}
-                onPress={() => handleSelectCategory(category.name)}
-                style={[styles.button, selected && styles.buttonSelected]}
+                key={campus.name}
+                onPress={() => handleSelectCampus(campus.name)}
+                style={[
+                  styles.button,
+                  selectedCampus === campus.name && styles.buttonSelected,
+                ]}
               >
-                <MaterialCommunityIcons
-                  name={category.icon}
-                  size={28}
-                  color={selected ? '#fff' : '#000'}
-                  style={styles.icon}
-                />
-                <Text style={[styles.buttonText, selected && styles.selectedText]}>
-                  {category.name}
+                <Text
+                  style={[
+                    styles.buttonText,
+                    selectedCampus === campus.name && styles.selectedText,
+                  ]}
+                >
+                  {campus.name}
                 </Text>
               </TouchableOpacity>
-            );
-          })}
+            ))}
+          </View>
+  
+          <View style={styles.divider} />
+  
+          <Text style={styles.sectionTitle}>หมวดหมู่ฟอรั่ม</Text>
+          <View style={styles.buttonContainer}>
+            {categories.map((category) => {
+              const selected = selectedCategory === category.name;
+              return (
+                <TouchableOpacity
+                  key={category.name}
+                  onPress={() => handleSelectCategory(category.name)}
+                  style={[styles.button, selected && styles.buttonSelected]}
+                >
+                  <MaterialCommunityIcons
+                    name={category.icon}
+                    size={28}
+                    color={selected ? '#fff' : '#000'}
+                    style={styles.icon}
+                  />
+                  <Text style={[styles.buttonText, selected && styles.selectedText]}>
+                    {category.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
-      </View>
-    </DrawerContentScrollView>
-  );
-}
+      </DrawerContentScrollView>
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {

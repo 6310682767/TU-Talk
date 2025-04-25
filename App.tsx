@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import CampusSelectScreen from './screens/CampusSelectScreen';
 import SetDisplayNameScreen from './screens/SetDisplayNameScreen';
 import MainDrawerNavigator from './navigation/MainDrawerNavigator';
+import { CampusProvider } from './contexts/CampusContext'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const App = () => {
   if (!fontsLoaded) return null;
 
   return (
+    <CampusProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={isLoggedIn ? 'MainApp' : 'Login'}>
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -36,6 +38,7 @@ const App = () => {
           <Stack.Screen name="MainApp" component={MainDrawerNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
+    </CampusProvider>
   );
 };
 

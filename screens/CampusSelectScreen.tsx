@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '@styles/campusSelectStyles'; // นำเข้า style
+import styles from '@styles/campusSelectStyles';
+import { useCampus } from '../contexts/CampusContext'; 
 
 const CampusSelectScreen = ({ navigation }) => {
-  const campuses = ['รังสิต ', 'ท่าพระจันทร์', 'ลำปาง', 'พัทยา',  ];
+  const campuses = ['รังสิต', 'ท่าพระจันทร์', 'ลำปาง', 'พัทยา'];
+  const { setCampus } = useCampus(); // 
 
   const handleSelectCampus = (campus: string) => {
-    navigation.navigate('SetDisplayName', { campus }); // ส่งข้อมูล campus ไปยัง SetDisplayName
+    setCampus(campus); 
+    navigation.navigate('SetDisplayName');
   };
 
   return (
