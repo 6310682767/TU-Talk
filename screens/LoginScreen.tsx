@@ -11,7 +11,7 @@ import {
 import { styles } from '@styles/loginStyles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'; 
-import { RootStackParamList } from 'types';
+import { RootStackParamList } from '../types';
 
 // กำหนดประเภทของ navigation
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from '@styles/campusSelectStyles';
 import { useCampus } from '../contexts/CampusContext'; 
-import { RootStackParamList } from 'types';
+import { RootStackParamList } from '../types';
 
 type CampusSelectScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CampusSelect'>;
 
