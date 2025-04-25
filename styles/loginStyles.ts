@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
     width: '30%',
     alignItems: 'center',
     marginTop: 8,
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',

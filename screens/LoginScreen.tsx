@@ -10,10 +10,13 @@ import {
   ImageBackground,
 } from 'react-native';
 import { styles } from '@styles/loginStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
   const [studentId, setStudentId] = useState('');
   const [citizenId, setCitizenId] = useState('');
+
+  const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (!studentId || !citizenId) {
@@ -42,8 +45,9 @@ const LoginScreen = () => {
         console.log('Response status:', response.status);
         const data = await response.json();
         console.log('Response data:', data);
-        alert(`ยินดีต้อนรับ ${data.displayname_th}`);
-        // นำทางไปหน้าเลือกวิทยาเขต หรือหน้าหลัก
+        // alert(`ยินดีต้อนรับ ${data.displayname_th}`);
+        navigation.navigate('CampusSelect'); // นำทางไปหน้าเลือกวิทยาเขต
+        
       } else {
         const errData = await response.json();
         alert(errData.message || 'เข้าสู่ระบบไม่สำเร็จ');
