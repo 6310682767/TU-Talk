@@ -39,10 +39,14 @@ const LoginScreen = () => {
       }
 
       if (response.ok) {
-        alert(`ยินดีต้อนรับ`);
-        // navigate ไปหน้าอื่น
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        alert(`ยินดีต้อนรับ ${data.displayname_th}`);
+        // นำทางไปหน้าเลือกวิทยาเขต หรือหน้าหลัก
       } else {
-        alert('เข้าสู่ระบบไม่สำเร็จ');
+        const errData = await response.json();
+        alert(errData.message || 'เข้าสู่ระบบไม่สำเร็จ');
       }
     } catch (error) {
       console.error('Login error:', error);
