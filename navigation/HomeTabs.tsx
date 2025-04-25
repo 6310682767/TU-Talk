@@ -1,40 +1,61 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FeedScreen from '@screens/FeedScreen';
-import CreatePostScreen from '@screens/CreatePostScreen';
-import NotificationScreen from '@screens/NotificationScreen';
-import ProfileScreen from '@screens/ProfileScreen';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import FeedScreen from '../screens/FeedScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-const HomeTabs = () => {
+export default function HomeTabs() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-          if (route.name === 'หน้าหลัก') iconName = 'home-outline';
-          else if (route.name === 'สร้างโพสต์') iconName = 'create-outline';
-          else if (route.name === 'แจ้งเตือน') iconName = 'notifications-outline';
-          else if (route.name === 'โปรไฟล์') iconName = 'person-outline';
-          return <Ionicons name={iconName} size={size} color={color} />;
+      screenOptions={{
+        tabBarActiveTintColor: '#EFB553',  // สีของแท็บที่ถูกเลือก
+        tabBarInactiveTintColor: '#B0B0B0',  // สีของแท็บที่ไม่ได้เลือก
+        tabBarStyle: {
+          backgroundColor: '#fff', // สีพื้นหลังของ Tab Bar
         },
-        tabBarActiveTintColor: '#0055ff',
-        tabBarInactiveTintColor: 'gray',
-        tabBarLabelStyle: {
-          fontFamily: 'NotoSansThai-Regular',
-          fontSize: 12,
-        },
-      })}
+      }}
     >
-      <Tab.Screen name="หน้าหลัก" component={FeedScreen} />
-      <Tab.Screen name="สร้างโพสต์" component={CreatePostScreen} />
-      <Tab.Screen name="แจ้งเตือน" component={NotificationScreen} />
-      <Tab.Screen name="โปรไฟล์" component={ProfileScreen} />
+      <Tab.Screen
+        name="หน้าหลัก"
+        component={FeedScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="สร้างโพสต์"
+        component={CreatePostScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="pencil" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="แจ้งเตือน"
+        component={NotificationScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="โปร์ไฟล์"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
-};
-
-export default HomeTabs;
+}

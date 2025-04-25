@@ -27,6 +27,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center', 
     fontFamily: 'NotoSansThai-Regular', 
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   button: {
     width: '30%',

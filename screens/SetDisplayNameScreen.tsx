@@ -12,7 +12,7 @@ const SetDisplayNameScreen = ({ navigation }) => {
     }
 
     alert(`ชื่อแสดงของคุณคือ: ${displayName}`); // ล็อกการแสดงผลหรือทำการส่งข้อมูลไปยัง API ตามต้องการ
-    navigation.navigate('HomeTabs');
+    navigation.navigate('MainApp');
   };
 
   return (
