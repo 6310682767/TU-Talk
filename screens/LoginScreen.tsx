@@ -22,7 +22,7 @@ const LoginScreen = () => {
     }
   
     try {
-      const response = await fetch('http://10.0.2.2:3000/api/login', {
+      const response = await fetch('http://10.0.2.2:3000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,13 +33,16 @@ const LoginScreen = () => {
         }),
       });
   
-      const data = await response.json();
-  
-      if (response.ok && data.success) {
-        alert(`ยินดีต้อนรับ ${data.name}`);
-        // ไปหน้าอื่น เช่น navigate('Home')
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('ไม่สามารถอ่านข้อมูลจากเซิร์ฟเวอร์ได้');
+      }
+
+      if (response.ok) {
+        alert(`ยินดีต้อนรับ`);
+        // navigate ไปหน้าอื่น
       } else {
-        alert(data.message || 'เข้าสู่ระบบไม่สำเร็จ');
+        alert('เข้าสู่ระบบไม่สำเร็จ');
       }
     } catch (error) {
       console.error('Login error:', error);
