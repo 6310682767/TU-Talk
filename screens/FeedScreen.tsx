@@ -6,6 +6,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'; // นำเข
 import { styles } from '../styles/feedScreenStyles';
 import { useForum } from '../contexts/ForumContext';
 import { RootDrawerParamList } from '../types'; 
+import MockFeed from '../components/MockFeed';
 
 // กำหนดประเภทของ navigation
 type FeedScreenNavigationProp = DrawerNavigationProp<RootDrawerParamList, 'Feed'>;
@@ -25,20 +26,12 @@ const FeedScreen: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: '#EFB553' }} >
+      <Appbar.Header style={{ backgroundColor: '#EFB553' }}>
         <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} color="white" />
         <Appbar.Content title="TU TALK" titleStyle={{ fontFamily: 'Righteous-Regular', fontSize: 20, color: 'white'}} />
       </Appbar.Header>
-
-      <FlatList
-        data={[{ id: '1', content: 'โพสต์แรก' }, { id: '2', content: 'โพสต์ที่สอง' }]}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text>{item.content}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+  
+      <MockFeed />
     </View>
   );
 };

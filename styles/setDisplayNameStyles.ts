@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 32,
     backgroundColor: '#EBEDF0',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 20,
     shadowColor: '#000',
     shadowOpacity: 0.1,
