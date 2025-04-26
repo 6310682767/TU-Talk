@@ -3,7 +3,6 @@ import { View, Text, FlatList } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer'; // นำเข้า DrawerNavigationProp
-import { styles } from '../styles/feedScreenStyles';
 import { useForum } from '../contexts/ForumContext';
 import { RootDrawerParamList } from '../types'; 
 import MockFeed from '../components/MockFeed';

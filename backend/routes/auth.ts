@@ -6,6 +6,9 @@ const router = express.Router();
 interface LoginResponse {
   status: boolean;
   displayname_th?: string;
+  faculty?: string;
+  department?: string;
+  email?: string;
   [key: string]: any;
 }
 
@@ -26,12 +29,15 @@ router.post('/login', async (req, res) => {
     });
 
     const data = await response.json() as LoginResponse;
-
+    console.log('API Response:', data);
     if (data.status === true) {
       res.status(200).json({
         success: true,
         displayname_th: data.displayname_th,
         name: data.displayname_th,
+        faculty: data.faculty,        // เพิ่ม faculty
+        department: data.department,  // เพิ่ม department
+        email: data.email,
       });
     } else {
       res.status(401).json({ success: false, message: 'รหัสผ่านไม่ถูกต้อง' });

@@ -1,12 +1,12 @@
 import React, { createContext, useState, useContext } from 'react';
 
+
 type ForumContextType = {
   campus: string;
   setCampus: (campus: string) => void;
   category: string | null;
   setCategory: React.Dispatch<React.SetStateAction<string | null>>; 
 };
-
 
 const ForumContext = createContext<ForumContextType | undefined>(undefined);
 

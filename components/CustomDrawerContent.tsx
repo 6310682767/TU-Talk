@@ -4,25 +4,7 @@ import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-nav
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useForum } from '../contexts/ForumContext';
 import styles from '@styles/customDrawerContentStyles';
-
-const campuses = [
-  { name: 'รังสิต' },
-  { name: 'ท่าพระจันทร์' },
-  { name: 'ลำปาง' },
-  { name: 'พัทยา' },
-];
-
-const categories = [
-  { name: 'ถาม-ตอบทั่วไป', icon: 'chat-question' },
-  { name: 'วิชาการ', icon: 'book-open-variant' },
-  { name: 'รีวิววิชา & อาจารย์', icon: 'account-star' },
-  { name: 'หอพัก', icon: 'home-city' },
-  { name: 'ตามหาของหาย', icon: 'magnify' },
-  { name: 'ร้านเด็ดในมอ', icon: 'silverware-fork-knife' },
-  { name: 'ข่าวสาร', icon: 'newspaper-variant-outline' },
-  { name: 'ฝึกงาน/สหกิจ', icon: 'briefcase-variant-outline' },
-  { name: 'กิจกรรม/ชมรม', icon: 'account-group' },
-];
+import { campuses, categories } from '../constants';
 
 export default function CustomDrawerContent(props: DrawerContentComponentProps) {
   const {

@@ -33,6 +33,7 @@ export default function HomeTabs() {
         name="สร้างโพสต์"
         component={CreatePostScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="pencil" color={color} size={size} />
           ),
@@ -42,6 +43,7 @@ export default function HomeTabs() {
         name="แจ้งเตือน"
         component={NotificationScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="bell" color={color} size={size} />
           ),
@@ -51,6 +53,7 @@ export default function HomeTabs() {
         name="โปร์ไฟล์"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),

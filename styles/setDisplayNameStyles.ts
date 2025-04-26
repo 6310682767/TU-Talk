@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     borderRadius: 32,
     backgroundColor: '#EBEDF0',
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 16,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -38,7 +38,6 @@ export const styles = StyleSheet.create({
     width: '30%',
     alignItems: 'center',
     marginTop: 8,
-    elevation: 5,
   },
   buttonText: {
     color: '#fff',

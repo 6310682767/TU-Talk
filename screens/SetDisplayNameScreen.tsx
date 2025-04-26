@@ -1,6 +1,5 @@
-// SetDisplayNameScreen.tsx
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { styles } from '@styles/setDisplayNameStyles';
 import { useForum } from '../contexts/ForumContext';
 import { StackNavigationProp } from '@react-navigation/stack'; 
@@ -28,6 +27,14 @@ const SetDisplayNameScreen = ({ route, navigation }: Props) => {
   }, [campus]);
 
   const handleSetDisplayName = () => {
+    // ตรวจสอบอักขระพิเศษ
+    const hasInvalidChar = /[^ก-๙a-zA-Z0-9\s]/.test(displayName);
+
+    if (hasInvalidChar) {
+      alert('ห้ามใช้อักขระพิเศษในชื่อแสดง');
+      return;
+    }
+
     if (!displayName) {
       alert('กรุณากรอกชื่อแสดง');
       return;
