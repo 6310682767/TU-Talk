@@ -50,7 +50,7 @@ const SetDisplayNameScreen = ({ route, navigation }: Props) => {
       });
     }
 
-    alert(`ชื่อแสดงของคุณคือ: ${displayName}`);
+    // alert(`ชื่อแสดงของคุณคือ: ${displayName}`);
     navigation.navigate('MainApp');
   };
 

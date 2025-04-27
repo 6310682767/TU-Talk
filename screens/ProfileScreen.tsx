@@ -87,7 +87,7 @@ const ProfileScreen = () => {
             screenOptions={{
               tabBarLabelStyle: styles.tabLabel,
               tabBarActiveTintColor: '#D84A34',
-              tabBarInactiveTintColor: '#000',
+              tabBarInactiveTintColor: '#666',
               tabBarIndicatorStyle: { backgroundColor: '#D84A34' },
               tabBarStyle: styles.tabBarStyle,
             }}

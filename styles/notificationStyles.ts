@@ -8,21 +8,30 @@ const styles = StyleSheet.create({
   appbar: {
     backgroundColor: '#EFB553',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'flex-start',
   },
-  appbarCenter: {
+  placeholder: {
+    width: 48, // Match the typical width of Appbar.Action (icon + padding)
+  },
+  titleContainer: {
     flex: 1,
     alignItems: 'center',
-    marginRight: 56, // ชดเชยปุ่ม back
   },
   appbarTitle: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansThai-Bold',
   },
   notificationList: {
     padding: 10,
+  },
+  sectionHeader: {
+    fontSize: 18,
+    fontFamily: 'NotoSansThai-Bold',
+    color: '#333',
+    marginVertical: 10,
+    marginLeft: 15,
   },
   notificationItem: {
     flexDirection: 'row',
@@ -30,7 +39,16 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 10,
     borderRadius: 16,
-    shadowColor: '#000',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  unreadNotification: {
+    backgroundColor: '#e8f0fe',
+  },
+  notificationContentWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
   },
   profileImage: {
     width: 45,
@@ -43,16 +61,29 @@ const styles = StyleSheet.create({
   },
   notificationMessage: {
     fontSize: 16,
+    fontFamily: 'NotoSansThai-Regular',
     color: '#333',
   },
   userName: {
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansThai-Bold',
     color: '#D84A34',
   },
   notificationTime: {
     fontSize: 12,
+    fontFamily: 'NotoSansThai-Regular',
     color: '#999',
     marginTop: 5,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 200, // Ensure enough space for centering
+  },
+  emptyText: {
+    color: '#666',
+    fontSize: 16,
+    fontFamily: 'NotoSansThai-Regular',
   },
 });
 

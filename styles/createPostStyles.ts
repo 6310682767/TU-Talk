@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     padding: 12,
     justifyContent: 'center',
     marginTop: 8,
+    marginHorizontal: 4,
   },
   selectorText: {
     fontSize: 16,

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     screenText: {
       fontFamily: 'NotoSansThai-Regular',  
       fontSize: 16,
-      color: '#333',
+      color: '#666',
     },
   });
   
