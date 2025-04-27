@@ -2,102 +2,110 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useNavigation } from '@react-navigation/native';
 import { useUser } from '../contexts/UserContext';
+import { styles } from '@styles/profileStyles';
+import MyPostsScreen from './MyPostsScreen'; // นำเข้า MyPostsScreen
+import SavedPostsScreen from './SavedPostsScreen'; // นำเข้า SavedPostsScreen
+import StarredUsersScreen from './StarredUsersScreen'; // นำเข้า StarredUsersScreen
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack'; 
+import { RootStackParamList } from '../types';
+import { useTranslation } from 'react-i18next';
 
-const Tab = createMaterialTopTabNavigator();
+// กำหนดประเภทของ navigation
+type SettingsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SettingsScreen'>;
 
-const MyPostsScreen = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>โพสต์ของฉัน</Text>
-  </View>
-);
-
-const SavedPostsScreen = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>โพสต์ที่บันทึก</Text>
-  </View>
-);
-
-const StarredUsersScreen = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>คนที่ติดดาว</Text>
-  </View>
-);
+const Tab = createMaterialTopTabNavigator(); 
 
 const ProfileScreen = () => {
-  const { userProfile } = useUser(); // สมมติว่ามี displayName, realName, studentId, faculty, department, email, avatar
+  const navigation = useNavigation<SettingsScreenNavigationProp>(); // ใช้ประเภท StackNavigationProp
+  const { userProfile } = useUser();
 
   const handleChangeAvatar = () => {
     alert('เปลี่ยนรูปโปรไฟล์');
   };
 
+  const handleChangeDisplayName = () => {
+    alert('เปลี่ยนชื่อแสดง');
+  };
+
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={styles.container}>
       {/* Appbar */}
-      <Appbar.Header style={{ backgroundColor: '#EFB553' }}>
-        <Appbar.Content title="โปรไฟล์ของฉัน" titleStyle={{ fontFamily: 'NotoSansThai-Bold', fontSize: 20 }} />
+      <Appbar.Header style={styles.appbar}>
+        <Appbar.Action icon="arrow-left" color="white" onPress={() => navigation.goBack()  } />
+        <Appbar.Content title="" titleStyle={styles.appbarTitle} />
       </Appbar.Header>
 
-      <ScrollView contentContainerStyle={{ padding: 16, alignItems: 'center' }}>
-        {/* รูปโปรไฟล์ */}
-        <TouchableOpacity onPress={handleChangeAvatar}>
-          <Image
-            source={{ uri: userProfile?.avatar || 'https://via.placeholder.com/150' }}
-            style={{
-              width: 120,
-              height: 120,
-              borderRadius: 60,
-              borderWidth: 3,
-              borderColor: 'white',
-              marginTop: -60,
-              backgroundColor: '#eee',
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        {/* Card ขาว */}
+        <View style={styles.card}>
+        
+          {/* ปุ่มตั้งค่า */}
+          <TouchableOpacity
+            style={styles.settingsIcon}
+            onPress={() => navigation.navigate('SettingsScreen')} 
+          >
+            <MaterialCommunityIcons name="cog" size={24} color="#B0B0B0" />
+          </TouchableOpacity>
+          
+          {/* รูปโปรไฟล์ */}
+          <TouchableOpacity
+            onPress={handleChangeAvatar}
+            style={styles.avatarContainer}
+          >
+            <Image
+              source={{ uri: userProfile?.avatar || 'https://via.placeholder.com/150' }}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
+
+          {/* Display Name */}
+          <TouchableOpacity onPress={handleChangeDisplayName}>
+            <Text style={styles.displayName}>
+              {userProfile?.displayName || 'ชื่อผู้ใช้'}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Student ID */}
+          <Text style={styles.studentId}>
+            {'@' + (userProfile?.studentId || 'รหัสนักศึกษา')}
+          </Text>
+
+          {/* รายละเอียด */}
+          <View style={styles.detailsContainer}>
+            <DetailRow label="ชื่อ-นามสกุล" value={userProfile?.name || '-'} />
+            <DetailRow label="คณะ" value={userProfile?.faculty || '-'} />
+            <DetailRow label="สาขา" value={userProfile?.department || '-'} />
+          </View>
+        </View>
+
+        {/* Tabs */}
+        <View style={styles.tabsContainer}>
+          <Tab.Navigator
+            screenOptions={{
+              tabBarLabelStyle: styles.tabLabel,
+              tabBarActiveTintColor: '#D84A34',
+              tabBarInactiveTintColor: '#000',
+              tabBarIndicatorStyle: { backgroundColor: '#D84A34' },
+              tabBarStyle: styles.tabBarStyle,
             }}
-          />
-        </TouchableOpacity>
-
-        {/* Display Name */}
-        <Text style={{ fontFamily: 'NotoSansThai-Bold', fontSize: 22, marginTop: 12 }}>
-          {userProfile?.displayName || 'ชื่อผู้ใช้'}
-        </Text>
-
-       
-        {/* Student ID */}
-        <Text style={{ fontFamily: 'NotoSansThai-Regular', fontSize: 16, color: '#777', marginBottom: 16 }}>
-          {userProfile?.studentId || 'รหัสนักศึกษา'}
-        </Text>
-
-        {/* รายละเอียด */}
-        <View style={{ width: '100%', paddingHorizontal: 16 }}>
-          <DetailRow label="ชื่อ-นามสกุล" value={userProfile?.name || '-'} />
-          <DetailRow label="คณะ" value={userProfile?.faculty || '-'} />
-          <DetailRow label="สาขา" value={userProfile?.department || '-'} />
-          <DetailRow label="อีเมลมหาวิทยาลัย" value={userProfile?.email || '-'} />
+          >
+            <Tab.Screen name="โพสต์" component={MyPostsScreen} />
+            <Tab.Screen name="ที่บันทึก" component={SavedPostsScreen} />
+            <Tab.Screen name="ติดดาว" component={StarredUsersScreen} />
+          </Tab.Navigator>
         </View>
       </ScrollView>
-
-      {/* Tabs ด้านล่าง */}
-      <View style={{ flex: 1 }}>
-        <Tab.Navigator
-          screenOptions={{
-            tabBarLabelStyle: { fontFamily: 'NotoSansThai-Medium', fontSize: 14 },
-            tabBarActiveTintColor: '#EFB553',
-            tabBarInactiveTintColor: '#888',
-            tabBarIndicatorStyle: { backgroundColor: '#EFB553' },
-          }}
-        >
-          <Tab.Screen name="โพสต์ของฉัน" component={MyPostsScreen} />
-          <Tab.Screen name="โพสต์ที่บันทึก" component={SavedPostsScreen} />
-          <Tab.Screen name="คนที่ติดดาว" component={StarredUsersScreen} />
-        </Tab.Navigator>
-      </View>
     </View>
   );
 };
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <View style={{ marginBottom: 12 }}>
-    <Text style={{ fontFamily: 'NotoSansThai-Medium', fontSize: 14, color: '#555' }}>{label}</Text>
-    <Text style={{ fontFamily: 'NotoSansThai-Regular', fontSize: 16 }}>{value}</Text>
+  <View style={styles.detailRow}>
+    <Text style={styles.detailLabel}>{label}</Text>
+    <Text style={styles.detailValue}>{value}</Text>
   </View>
 );
 

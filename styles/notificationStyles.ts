@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'NotoSansThai-Regular',
   },
   notificationItem: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#000',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,

@@ -6,6 +6,7 @@ interface UserProfile {
   faculty: string;
   department: string;
   email: string;
+  displayName: string;
 }
 
 interface UserContextType {

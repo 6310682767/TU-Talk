@@ -9,7 +9,8 @@ import { Portal } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { categories, targetGroups } from '../constants';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';  // ต้อง import useCallback ด้วยนะ
+import { useCallback } from 'react';  
+import { useTranslation } from 'react-i18next';
 
 interface CategoryItem {
   name: string;

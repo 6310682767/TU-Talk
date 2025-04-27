@@ -13,16 +13,17 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'; 
 import { useUser } from '../contexts/UserContext';
 import { RootStackParamList } from '../types';
+import { useTranslation } from 'react-i18next';
 
 // กำหนดประเภทของ navigation
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const LoginScreen = () => {
+  const navigation = useNavigation<LoginScreenNavigationProp>(); // ใช้ประเภท StackNavigationProp
+
   const [studentId, setStudentId] = useState('');
   const [citizenId, setCitizenId] = useState('');
   const { setUserProfile } = useUser();
-
-  const navigation = useNavigation<LoginScreenNavigationProp>(); // ใช้ประเภท StackNavigationProp
 
   const handleLogin = async () => {
     if (!studentId || !citizenId) {
@@ -56,6 +57,7 @@ const LoginScreen = () => {
           faculty: data.faculty, 
           department: data.department, 
           email: data.email,
+          displayName: '',
         });
         // alert(`ยินดีต้อนรับ ${data.displayname_th}`);
         navigation.navigate('CampusSelect'); // นำทางไปหน้าเลือกวิทยาเขต

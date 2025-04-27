@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styles from '@styles/campusSelectStyles';
+import { styles } from '@styles/campusSelectStyles';
 import { useCampus } from '../contexts/CampusContext'; 
 import { RootStackParamList } from '../types';
 import { campuses } from '../constants';
+import { useTranslation } from 'react-i18next';
 
 type CampusSelectScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CampusSelect'>;
 

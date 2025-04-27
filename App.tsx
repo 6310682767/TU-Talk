@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from './screens/LoginScreen';
-import CampusSelectScreen from './screens/CampusSelectScreen';
-import SetDisplayNameScreen from './screens/SetDisplayNameScreen';
+import LoginScreen from '@screens/LoginScreen';
+import CampusSelectScreen from '@screens/CampusSelectScreen';
+import SetDisplayNameScreen from '@screens/SetDisplayNameScreen';
+import SettingsScreen from '@screens/SettingsScreen';
 import MainDrawerNavigator from './navigation/MainDrawerNavigator';
 import { CampusProvider } from './contexts/CampusContext';
 import { ForumProvider } from './contexts/ForumContext';
@@ -44,6 +45,7 @@ const App = () => {
               <Stack.Screen name="CampusSelect" component={CampusSelectScreen} options={{ headerShown: false }}/>
               <Stack.Screen name="SetDisplayName" component={SetDisplayNameScreen}  options={{ headerShown: false }}/>
               <Stack.Screen name="MainApp" component={MainDrawerNavigator}  options={{ headerShown: false }} />
+              <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
           </NavigationContainer>
         </ForumProvider>

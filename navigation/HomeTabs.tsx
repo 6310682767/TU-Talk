@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import FeedScreen from '../screens/FeedScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 import NotificationScreen from '../screens/NotificationScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileStackScreen from './ProfileStackScreen';  // ใช้ ProfileStackScreen แทน ProfileScreen
 
 const Tab = createBottomTabNavigator();
 
@@ -12,14 +12,14 @@ export default function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#EFB553',  // สีของแท็บที่ถูกเลือก
-        tabBarInactiveTintColor: '#B0B0B0',  // สีของแท็บที่ไม่ได้เลือก
+        tabBarActiveTintColor: '#EFB553',
+        tabBarInactiveTintColor: '#B0B0B0',
         tabBarStyle: {
-          backgroundColor: '#fff', 
+          backgroundColor: '#fff',
         },
         tabBarLabelStyle: {
-          fontFamily: 'NotoSansThai-Regular',  
-          fontSize: 12,                      
+          fontFamily: 'NotoSansThai-Regular',
+          fontSize: 12,
         },
       }}
     >
@@ -54,8 +54,8 @@ export default function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name="โปร์ไฟล์"
-        component={ProfileScreen}
+        name="โปรไฟล์"
+        component={ProfileStackScreen}  // ใช้ ProfileStackScreen แทน ProfileScreen
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (

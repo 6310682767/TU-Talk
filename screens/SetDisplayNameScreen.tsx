@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { styles } from '@styles/setDisplayNameStyles';
 import { useForum } from '../contexts/ForumContext';
+import { useUser } from '../contexts/UserContext';
 import { StackNavigationProp } from '@react-navigation/stack'; 
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types'; 
+import { useTranslation } from 'react-i18next';
 
 // กำหนดประเภทของ navigation และ route
 type SetDisplayNameScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SetDisplayName'>;
@@ -19,6 +21,7 @@ const SetDisplayNameScreen = ({ route, navigation }: Props) => {
   const [displayName, setDisplayName] = useState('');
   const campus = route?.params?.campus ?? null; // ใช้ fallback
   const { setCampus } = useForum();
+  const { userProfile, setUserProfile } = useUser();
 
   useEffect(() => {
     if (campus) {
@@ -38,6 +41,13 @@ const SetDisplayNameScreen = ({ route, navigation }: Props) => {
     if (!displayName) {
       alert('กรุณากรอกชื่อแสดง');
       return;
+    }
+
+    if (userProfile) {
+      setUserProfile({
+        ...userProfile,          
+        displayName: displayName,
+      });
     }
 
     alert(`ชื่อแสดงของคุณคือ: ${displayName}`);

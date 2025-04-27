@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useForum } from '../contexts/ForumContext';
-import styles from '@styles/customDrawerContentStyles';
+import { styles } from '@styles/customDrawerContentStyles';
 import { campuses, categories } from '../constants';
 
 export default function CustomDrawerContent(props: DrawerContentComponentProps) {
