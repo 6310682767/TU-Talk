@@ -30,7 +30,8 @@
     "react-native-screens": "~4.4.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-switch": "^1.5.1",
-    "react-native-switch-toggle": "^2.2.1"
+    "react-native-switch-toggle": "^2.2.1",
+    "expo-image-picker": "~16.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -3,6 +3,7 @@ export type RootStackParamList = {
     CampusSelect: undefined;
     SetDisplayName: { campus: string }; 
     MainApp: undefined;
+    AvatarFullScreen: undefined;
     SettingsScreen: undefined;
   };
 

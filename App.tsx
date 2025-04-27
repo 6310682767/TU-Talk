@@ -7,6 +7,7 @@ import CampusSelectScreen from '@screens/CampusSelectScreen';
 import SetDisplayNameScreen from '@screens/SetDisplayNameScreen';
 import SettingsScreen from '@screens/SettingsScreen';
 import MainDrawerNavigator from './navigation/MainDrawerNavigator';
+import AvatarFullScreen from '@screens/AvatarFullScreen';
 import { CampusProvider } from './contexts/CampusContext';
 import { ForumProvider } from './contexts/ForumContext';
 import { UserProvider } from './contexts/UserContext';
@@ -45,6 +46,7 @@ const App = () => {
               <Stack.Screen name="CampusSelect" component={CampusSelectScreen} options={{ headerShown: false }}/>
               <Stack.Screen name="SetDisplayName" component={SetDisplayNameScreen}  options={{ headerShown: false }}/>
               <Stack.Screen name="MainApp" component={MainDrawerNavigator}  options={{ headerShown: false }} />
+              <Stack.Screen name="AvatarFullScreen" component={AvatarFullScreen} options={{ headerShown: false }} />
               <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
           </NavigationContainer>

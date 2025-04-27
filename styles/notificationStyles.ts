@@ -1,24 +1,59 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 22,
-    marginBottom: 20,
-    fontFamily: 'NotoSansThai-Regular',
+  appbar: {
+    backgroundColor: '#EFB553',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  appbarCenter: {
+    flex: 1,
+    alignItems: 'center',
+    marginRight: 56, // ชดเชยปุ่ม back
+  },
+  appbarTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  notificationList: {
+    padding: 10,
   },
   notificationItem: {
-    backgroundColor: '#000',
+    flexDirection: 'row',
+    backgroundColor: '#f4f4f4',
     padding: 15,
-    borderRadius: 10,
     marginBottom: 10,
+    borderRadius: 16,
+    shadowColor: '#000',
   },
-  notificationText: {
-    fontFamily: 'NotoSansThai-Regular',
-    fontSize: 15,
+  profileImage: {
+    width: 45,
+    height: 45,
+    borderRadius: 22.5,
+    marginRight: 15,
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  notificationMessage: {
+    fontSize: 16,
+    color: '#333',
+  },
+  userName: {
+    fontWeight: 'bold',
+    color: '#D84A34',
+  },
+  notificationTime: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 5,
   },
 });
+
+export default styles;

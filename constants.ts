@@ -3,9 +3,9 @@ export const campuses = [
     { name: 'ท่าพระจันทร์' },
     { name: 'ลำปาง' },
     { name: 'พัทยา' },
-  ];
+];
   
-  export const categories = [
+export const categories = [
     { name: 'ถาม-ตอบทั่วไป', icon: 'chat-question' },
     { name: 'วิชาการ', icon: 'book-open-variant' },
     { name: 'รีวิววิชา & อาจารย์', icon: 'account-star' },
@@ -15,11 +15,11 @@ export const campuses = [
     { name: 'ข่าวสาร', icon: 'newspaper-variant-outline' },
     { name: 'ฝึกงาน/สหกิจ', icon: 'briefcase-variant-outline' },
     { name: 'กิจกรรม/ชมรม', icon: 'account-group' },
-  ];
+];
   
-  export const targetGroups = [
+export const targetGroups = [
     { name: 'ทุกคน', icon: 'account-group' },
     { name: 'คณะเดียวกัน', icon: 'school' },
     { name: 'สาขาเดียวกัน', icon: 'account' },
-  ];
+];
   

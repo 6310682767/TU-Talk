@@ -52,7 +52,7 @@ const ProfileScreen = () => {
           
           {/* รูปโปรไฟล์ */}
           <TouchableOpacity
-            onPress={handleChangeAvatar}
+            onPress={() => navigation.navigate('AvatarFullScreen')}
             style={styles.avatarContainer}
           >
             <Image

@@ -58,6 +58,7 @@ const LoginScreen = () => {
           department: data.department, 
           email: data.email,
           displayName: '',
+          avatar: '', 
         });
         // alert(`ยินดีต้อนรับ ${data.displayname_th}`);
         navigation.navigate('CampusSelect'); // นำทางไปหน้าเลือกวิทยาเขต

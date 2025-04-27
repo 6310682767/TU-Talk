@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Appbar } from 'react-native-paper';
+import styles from '@styles/notificationStyles'; // <-- แยกไฟล์สไตล์ออกมาเลย
 
 const NotificationScreen = () => {
   const notifications = [
@@ -13,7 +14,9 @@ const NotificationScreen = () => {
     <View style={styles.container}>
       <Appbar.Header style={styles.appbar}>
         <Appbar.BackAction color="#fff" onPress={() => {}} />
-        <Text style={styles.appbarTitle}>การแจ้งเตือน</Text>
+        <View style={styles.appbarCenter}>
+          <Text style={styles.appbarTitle}>การแจ้งเตือน</Text>
+        </View>
       </Appbar.Header>
 
       <ScrollView style={styles.notificationList}>
@@ -32,53 +35,5 @@ const NotificationScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  appbar: {
-    backgroundColor: '#EFB553',
-  },
-  appbarTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  notificationList: {
-    padding: 10,
-  },
-  notificationItem: {
-    flexDirection: 'row',
-    backgroundColor: '#f4f4f4',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 16,
-    shadowColor: '#000',
-  },
-  profileImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
-    marginRight: 15,
-  },
-  notificationContent: {
-    flex: 1,
-  },
-  notificationMessage: {
-    fontSize: 16,
-    color: '#333',
-  },
-  userName: {
-    fontWeight: 'bold',
-    color: '#D84A34',
-  },
-  notificationTime: {
-    fontSize: 12,
-    color: '#999',
-    marginTop: 5,
-  },
-});
 
 export default NotificationScreen;

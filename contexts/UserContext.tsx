@@ -6,7 +6,8 @@ interface UserProfile {
   faculty: string;
   department: string;
   email: string;
-  displayName: string;
+  displayName: string;  
+  avatar: string; // URL ของรูปโปรไฟล์
 }
 
 interface UserContextType {
