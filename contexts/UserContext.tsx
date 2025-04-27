@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface UserProfile {
+  studentId: string;
   name: string;
   faculty: string;
   department: string;

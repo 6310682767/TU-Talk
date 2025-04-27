@@ -5,6 +5,7 @@ const router = express.Router();
 
 interface LoginResponse {
   status: boolean;
+  username?: string;
   displayname_th?: string;
   faculty?: string;
   department?: string;
@@ -33,6 +34,8 @@ router.post('/login', async (req, res) => {
     if (data.status === true) {
       res.status(200).json({
         success: true,
+        username: data.username,
+        studentId: data.username,
         displayname_th: data.displayname_th,
         name: data.displayname_th,
         faculty: data.faculty,        // เพิ่ม faculty

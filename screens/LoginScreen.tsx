@@ -51,6 +51,7 @@ const LoginScreen = () => {
       console.log('Response Data:', data);
       if (response.ok && data.success) {
         setUserProfile({
+          studentId: data.username,
           name: data.displayname_th,  
           faculty: data.faculty, 
           department: data.department, 

@@ -8,6 +8,8 @@ import { Appbar, Text as PaperText } from 'react-native-paper';
 import { Portal } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { categories, targetGroups } from '../constants';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';  // ต้อง import useCallback ด้วยนะ
 
 interface CategoryItem {
   name: string;
@@ -26,6 +28,18 @@ const CreatePostScreen = () => {
   const { userProfile } = useUser();
   const navigation = useNavigation();
 
+  const [isPosted, setIsPosted] = useState(false); // <- เพิ่มตัวนี้
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isPosted) {
+        setTitle('');
+        setContent('');
+        setIsPosted(false); // ล้าง flag กลับเป็น false หลังล้างแล้ว
+      }
+    }, [isPosted]) // <- ผูกกับ isPosted
+  );
+
   const handlePost = () => {
     if (!title || !content || !category || !targetGroup) {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
@@ -42,9 +56,15 @@ const CreatePostScreen = () => {
       department: userProfile?.department,
     };
 
-    console.log('โพสต์ใหม่:', postData);
-    alert('โพสต์เรียบร้อย!');
-    navigation.goBack();
+    try {
+      setIsPosted(true); // ตั้ง flag ว่าโพสต์เสร็จ
+      console.log('โพสต์ใหม่:', postData);
+      alert('โพสต์เรียบร้อย!');
+      navigation.goBack();
+    } catch (error) {
+      console.error(error);
+      alert('โพสต์ไม่สำเร็จ');
+    }
   };
 
   const openModal = (type: 'category' | 'target') => {
@@ -135,8 +155,8 @@ const CreatePostScreen = () => {
       </Portal>
       {/* Header */}
       <Appbar.Header style={{ backgroundColor: '#EFB553' }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} color="white" />
-        <View style={{ flex: 1, alignItems: 'center', marginRight: 12 }}>
+        <Appbar.Action icon="close" onPress={() => navigation.goBack()} color="white" />
+        <View style={{ flex: 1, alignItems: 'center', marginRight: 16 }}>
           <PaperText style={{ fontFamily: 'NotoSansThai-Bold', fontSize: 20, color: 'white' }}>
             สร้างโพสต์
           </PaperText>

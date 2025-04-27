@@ -15,7 +15,11 @@ export default function HomeTabs() {
         tabBarActiveTintColor: '#EFB553',  // สีของแท็บที่ถูกเลือก
         tabBarInactiveTintColor: '#B0B0B0',  // สีของแท็บที่ไม่ได้เลือก
         tabBarStyle: {
-          backgroundColor: '#fff', // สีพื้นหลังของ Tab Bar
+          backgroundColor: '#fff', 
+        },
+        tabBarLabelStyle: {
+          fontFamily: 'NotoSansThai-Regular',  
+          fontSize: 12,                      
         },
       }}
     >
