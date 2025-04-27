@@ -10,6 +10,7 @@ import { CampusProvider } from './contexts/CampusContext';
 import { ForumProvider } from './contexts/ForumContext';
 import { UserProvider } from './contexts/UserContext';
 import { RootStackParamList } from 'types'; 
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator<RootStackParamList>(); 
 
@@ -33,6 +34,7 @@ const App = () => {
   if (!fontsLoaded) return null;
 
   return (
+    <PaperProvider>
     <UserProvider>
       <CampusProvider>
         <ForumProvider>
@@ -47,6 +49,7 @@ const App = () => {
         </ForumProvider>
       </CampusProvider>
     </UserProvider>
+    </PaperProvider>
   );
 };
 

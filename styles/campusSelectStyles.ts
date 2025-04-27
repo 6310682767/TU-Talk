@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: 'NotoSansThai-Regular',
   },
+  modalHeader: {
+    flexDirection: 'row',         
+    alignItems: 'center',         
+    justifyContent: 'flex-start', 
+    padding: 10,                  
+    backgroundColor: '#f1f1f1',   
+  },
 });
 
 export default styles;

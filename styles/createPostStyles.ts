@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 16,
+    backgroundColor: '#fff',
   },
   label: {
     fontSize: 16,
@@ -11,28 +13,44 @@ export const styles = StyleSheet.create({
     marginTop: 16,
   },
   selector: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    backgroundColor: '#f1f1f1',
+    borderRadius: 16,
     padding: 12,
     justifyContent: 'center',
+    marginTop: 8,
   },
   selectorText: {
     fontSize: 16,
+    fontFamily: 'NotoSansThai-Regular',
     color: '#333',
   },
   textInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    marginTop: 16,
+    width: '100%',
+    fontSize: 18,
+    color: '#333',
+    fontFamily: 'NotoSansThai-Regular',
+    marginTop: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   },
-  modalContainer: {
+  modalBackdrop: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  cardContainer: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
     padding: 20,
-    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 5,
+    maxHeight: '70%',
+    overflow: 'hidden',
   },
   modalTitle: {
     fontSize: 20,
@@ -49,5 +67,12 @@ export const styles = StyleSheet.create({
   },
   modalItemText: {
     fontSize: 16,
+    fontFamily: 'NotoSansThai-Regular',
+  },
+  cardWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
 });

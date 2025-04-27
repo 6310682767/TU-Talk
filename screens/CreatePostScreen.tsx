@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, FlatList, Pressable } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, TouchableOpacity, FlatList, Pressable, StatusBar, Animated, StyleSheet } from 'react-native';
 import { styles } from '@styles/createPostStyles';
 import { useForum } from '../contexts/ForumContext';
 import { useUser } from '../contexts/UserContext';
 import { useNavigation } from '@react-navigation/native';
 import { Appbar, Text as PaperText } from 'react-native-paper';
+import { Portal } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { categories, targetGroups } from '../constants';
 
@@ -14,13 +15,13 @@ interface CategoryItem {
 }
 
 const CreatePostScreen = () => {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [category, setCategory] = useState<CategoryItem | null>(null);
-  const [targetGroup, setTargetGroup] = useState<string>('');
-  const [categoryModalVisible, setCategoryModalVisible] = useState<boolean>(false);
-  const [targetGroupModalVisible, setTargetGroupModalVisible] = useState<boolean>(false);
+  const [targetGroup, setTargetGroup] = useState('');
+  const [modalType, setModalType] = useState<'category' | 'target' | null>(null);
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const { campus } = useForum();
   const { userProfile } = useUser();
   const navigation = useNavigation();
@@ -46,12 +47,30 @@ const CreatePostScreen = () => {
     navigation.goBack();
   };
 
-  const renderCategoryItem = ({ item }: { item: CategoryItem }) => (
+  const openModal = (type: 'category' | 'target') => {
+    setModalType(type);
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeModal = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true,
+    }).start(() => setModalType(null));
+  };
+
+  const renderItem = ({ item }: { item: CategoryItem | { name: string; icon: string } }) => (
     <Pressable
       style={styles.modalItem}
       onPress={() => {
-        setCategory(item);
-        setCategoryModalVisible(false);
+        if (modalType === 'category') setCategory(item as CategoryItem);
+        else setTargetGroup(item.name);
+        closeModal();
       }}
     >
       <MaterialCommunityIcons name={item.icon} size={24} color="#333" style={{ marginRight: 10 }} />
@@ -59,22 +78,62 @@ const CreatePostScreen = () => {
     </Pressable>
   );
 
-  const renderTargetGroupItem = ({ item }: { item: { name: string; icon: string } }) => (
-    <Pressable
-      style={styles.modalItem}
-      onPress={() => {
-        setTargetGroup(item.name);
-        setTargetGroupModalVisible(false);
-      }}
-    >
-      <MaterialCommunityIcons name={item.icon} size={24} color="#333" style={{ marginRight: 10 }} />
-      <Text style={styles.modalItemText}>{item.name}</Text>
-    </Pressable>
-  );
+  const dataList = modalType === 'category' ? categories : targetGroups;
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Appbar */}
+      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+
+      {/* Modal */}
+      <Portal>
+      {modalType && (
+        <View
+          style={[
+            StyleSheet.absoluteFillObject,
+            {
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}
+        >
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={closeModal}
+          />
+
+          <Animated.View
+            style={{
+              width: '80%',
+              backgroundColor: 'white',
+              borderRadius: 16,
+              padding: 20,
+              opacity: fadeAnim,
+              transform: [
+                {
+                  scale: fadeAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.95, 1],
+                  }),
+                },
+              ],
+              elevation: 5, // เพิ่มเงาเบาๆ
+            }}
+          >
+            <Text style={styles.modalTitle}>
+              {modalType === 'category' ? 'เลือกหมวดหมู่' : 'เลือกกลุ่มเป้าหมาย'}
+            </Text>
+            <FlatList
+              data={dataList}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.name}
+            />
+          </Animated.View>
+        </View>
+      )}
+      </Portal>
+      {/* Header */}
       <Appbar.Header style={{ backgroundColor: '#EFB553' }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} color="white" />
         <View style={{ flex: 1, alignItems: 'center', marginRight: 12 }}>
@@ -89,12 +148,8 @@ const CreatePostScreen = () => {
 
       {/* Content */}
       <View style={styles.container}>
-        {/* เลือกหมวดหมู่ */}
-        <Text style={styles.label}>เลือกหมวดหมู่</Text>
-        <TouchableOpacity
-          style={styles.selector}
-          onPress={() => setCategoryModalVisible(true)}
-        >
+
+        <TouchableOpacity style={styles.selector} onPress={() => openModal('category')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {category && (
               <MaterialCommunityIcons name={category.icon} size={24} color="#333" style={{ marginRight: 10 }} />
@@ -105,12 +160,8 @@ const CreatePostScreen = () => {
           </View>
         </TouchableOpacity>
 
-        {/* เลือกกลุ่มเป้าหมาย */}
-        <Text style={styles.label}>เลือกกลุ่มเป้าหมาย</Text>
-        <TouchableOpacity
-          style={styles.selector}
-          onPress={() => setTargetGroupModalVisible(true)}
-        >
+
+        <TouchableOpacity style={styles.selector} onPress={() => openModal('target')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {targetGroup && (
               <MaterialCommunityIcons
@@ -121,54 +172,29 @@ const CreatePostScreen = () => {
               />
             )}
             <Text style={styles.selectorText}>
-              {targetGroup ? targetGroups.find(t => t.name === targetGroup)?.name : '-- เลือกกลุ่มเป้าหมาย --'}
+              {targetGroup ? targetGroup : '-- เลือกกลุ่มเป้าหมาย --'}
             </Text>
           </View>
         </TouchableOpacity>
 
-        {/* ชื่อเรื่อง */}
         <TextInput
           placeholder="ชื่อเรื่อง"
           placeholderTextColor="#999"
           value={title}
           onChangeText={setTitle}
-          style={styles.textInput}
+          style={[styles.textInput, { textAlignVertical: 'top' }]} 
+          multiline
         />
 
-        {/* เนื้อหา */}
         <TextInput
           placeholder="เขียนเนื้อหาฟอรั่ม..."
           placeholderTextColor="#999"
           value={content}
           onChangeText={setContent}
-          style={[styles.textInput, { height: 150, textAlignVertical: 'top' }]}
+          style={[styles.textInput, { textAlignVertical: 'top' }]}
           multiline
         />
       </View>
-
-      {/* Modal Category */}
-      <Modal visible={categoryModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>เลือกหมวดหมู่</Text>
-          <FlatList
-            data={categories}
-            renderItem={renderCategoryItem}
-            keyExtractor={(item) => item.name}
-          />
-        </View>
-      </Modal>
-
-      {/* Modal Target Group */}
-      <Modal visible={targetGroupModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>เลือกกลุ่มเป้าหมาย</Text>
-          <FlatList
-            data={targetGroups}
-            renderItem={renderTargetGroupItem}
-            keyExtractor={(item) => item.name}
-          />
-        </View>
-      </Modal>
     </View>
   );
 };

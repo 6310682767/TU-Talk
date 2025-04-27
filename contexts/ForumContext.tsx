@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
 
-
 type ForumContextType = {
   campus: string;
   setCampus: (campus: string) => void;
