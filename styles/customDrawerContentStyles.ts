@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 10,
     alignItems: 'center',
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#F0F2F5',
     borderRadius: 10,
     paddingVertical: 6,
     paddingHorizontal: 12,

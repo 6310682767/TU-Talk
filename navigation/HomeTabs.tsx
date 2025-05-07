@@ -2,13 +2,15 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import FeedScreen from '../screens/FeedScreen';
-import CreatePostScreen from '../screens/CreatePostScreen';
 import NotificationScreen from '../screens/NotificationScreen';
-import ProfileStackScreen from './ProfileStackScreen';  // ใช้ ProfileStackScreen แทน ProfileScreen
+import ProfileStackScreen from './ProfileStackScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabs() {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,16 +36,6 @@ export default function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name="สร้างโพสต์"
-        component={CreatePostScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="pencil" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="แจ้งเตือน"
         component={NotificationScreen}
         options={{
@@ -55,7 +47,7 @@ export default function HomeTabs() {
       />
       <Tab.Screen
         name="โปรไฟล์"
-        component={ProfileStackScreen}  // ใช้ ProfileStackScreen แทน ProfileScreen
+        component={ProfileStackScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (

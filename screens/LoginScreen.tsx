@@ -52,11 +52,13 @@ const LoginScreen = () => {
       console.log('Response Data:', data);
       if (response.ok && data.success) {
         setUserProfile({
+          userId: data.username, // ใช้รหัสนักศึกษาเป็น userId แทนไปก่อน
           studentId: data.username,
           name: data.displayname_th,  
           faculty: data.faculty, 
           department: data.department, 
           email: data.email,
+          campus: '',
           displayName: '',
           avatar: '', 
         });

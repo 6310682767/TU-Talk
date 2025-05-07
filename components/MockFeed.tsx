@@ -1,156 +1,130 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState, useCallback } from 'react';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, RefreshControl } from 'react-native';
+import { Chip } from 'react-native-paper';
 import { useForum } from '../contexts/ForumContext';
+import { usePostContext } from '../contexts/PostContext';
+import { useUser } from '../contexts/UserContext';
+import PostItem from './PostItem';
 
-const mockPosts = {
-  รังสิต: [
-    {
-      id: '1',
-      displayName: 'แนน TU',
-      time: '2 ชั่วโมงที่แล้ว',
-      category: 'ถาม-ตอบทั่วไป',
-      content: 'ใครเคยลงวิชา TU103 กับอ.สมชายบ้างคะ ขอรีวิวหน่อยค่ะ',
-    },
-    {
-      id: '2',
-      displayName: 'Mark TU',
-      time: '5 ชั่วโมงที่แล้ว',
-      category: 'ร้านเด็ดในมอ',
-      content: 'ข้าวหมูแดงเจ้าเด็ดหลังมอ ยังเปิดอยู่มั้ยครับ',
-    },
-    {
-      id: '3',
-      displayName: 'ออม',
-      time: 'เมื่อวาน',
-      category: 'รีวิววิชา & อาจารย์',
-      content: 'รีวิววิชา TU106 กับ อ.ปิ่นสุดใจ สนุกมากๆ เลยค่ะ มีเล่นเกมในคลาสด้วย',
-    },
-  ],
-  ท่าพระจันทร์: [
-    {
-      id: '4',
-      displayName: 'นัท',
-      time: '1 ชั่วโมงที่แล้ว',
-      category: 'หอพัก',
-      content: 'หอพักไหนที่ไม่ไกลจากวิทยาลัยมากครับ',
-    },
-    {
-      id: '5',
-      displayName: 'ป้อม',
-      time: '3 ชั่วโมงที่แล้ว',
-      category: 'ฝึกงาน/สหกิจ',
-      content: 'มีบริษัทไหนรับสหกิจของคณะวิศวะบ้างครับ',
-    },
-  ],
-  ลำปาง: [
-    {
-      id: '6',
-      displayName: 'เจี๊ยบ',
-      time: '4 ชั่วโมงที่แล้ว',
-      category: 'ถาม-ตอบทั่วไป',
-      content: 'มีร้านกาแฟแนะนำในลำปางมั้ยครับ?',
-    },
-  ],
-  พัทยา: [
-    {
-      id: '7',
-      displayName: 'โอม',
-      time: '6 ชั่วโมงที่แล้ว',
-      category: 'ข่าวสาร',
-      content: 'งานประชุมวิชาการในพัทยาเดือนหน้ามีใครสนใจบ้างครับ',
-    },
-  ],
-};
+const MockFeed: React.FC = () => {
+  const { campus, category } = useForum();
+  const { posts, getStarredPosts } = usePostContext();
+  const { userProfile } = useUser();
+  const [sort, setSort] = useState<'recent' | 'popular' | 'liked' | 'starred'>('recent');
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading] = useState(false);
 
-export default function MockFeed() {
-  const {
-    campus: selectedCampus,
-    category: selectedCategory,
-  } = useForum();
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 1000); // Simulate refresh
+  }, []);
 
-  const getFilteredPosts = () => {
-    // กรองโพสต์ตามวิทยาเขต
-    const postsForCampus = mockPosts[selectedCampus] || [];
-
-    // กรองโพสต์ตามหมวดหมู่
-    if (selectedCategory) {
-      return postsForCampus.filter(post => post.category === selectedCategory);
-    }
-
-    // ถ้าไม่ได้เลือกหมวดหมู่ จะเอาทุกโพสต์ในวิทยาเขตนั้น
-    return postsForCampus;
-  };
-
-  const postsToShow = getFilteredPosts();
+  const filteredPosts = sort === 'starred' && userProfile?.userId
+    ? getStarredPosts(userProfile.userId, campus, category)
+    : posts.filter((post) => {
+        const matchesCampus = campus ? post.campus === campus : true;
+        const matchesCategory = category ? post.category === category : true;
+        const matchesSort = sort === 'liked' ? post.isLiked : true;
+        return matchesCampus && matchesCategory && matchesSort;
+      }).sort((a, b) => {
+        if (sort === 'popular') {
+          return b.likes - a.likes;
+        }
+        return 0; 
+      });
 
   return (
-    <FlatList
-      data={postsToShow}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container}
-      renderItem={({ item }) => (
-        <View style={styles.postContainer}>
-          <View style={styles.header}>
-            <Text style={styles.displayName}>{item.displayName}</Text>
-            <Text style={styles.time}>{item.time}</Text>
-          </View>
-          <Text style={styles.category}>#{item.category}</Text>
-          <Text style={styles.content}>{item.content}</Text>
-          <View style={styles.actionRow}>
-            <MaterialCommunityIcons name="thumb-up-outline" size={20} />
-            <Text style={styles.actionText}>ถูกใจ</Text>
-            <MaterialCommunityIcons name="comment-outline" size={20} style={{ marginLeft: 20 }} />
-            <Text style={styles.actionText}>ความคิดเห็น</Text>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.filterBar}>
+        <View style={styles.chipContainer}>
+          <Chip
+            selected={sort === 'recent'}
+            onPress={() => setSort('recent')}
+            style={[styles.chip, sort === 'recent' && styles.chipSelected]}
+            textStyle={[styles.chipText, sort === 'recent' && styles.chipTextSelected]}
+          >
+            ล่าสุด
+          </Chip>
+          <Chip
+            selected={sort === 'popular'}
+            onPress={() => setSort('popular')}
+            style={[styles.chip, sort === 'popular' && styles.chipSelected]}
+            textStyle={[styles.chipText, sort === 'popular' && styles.chipTextSelected]}
+          >
+            ยอดนิยม
+          </Chip>
+          <Chip
+            selected={sort === 'liked'}
+            onPress={() => setSort('liked')}
+            style={[styles.chip, sort === 'liked' && styles.chipSelected]}
+            textStyle={[styles.chipText, sort === 'liked' && styles.chipTextSelected]}
+          >
+            ถูกใจ
+          </Chip>
+          <Chip
+            selected={sort === 'starred'}
+            onPress={() => setSort('starred')}
+            style={[styles.chip, sort === 'starred' && styles.chipSelected]}
+            textStyle={[styles.chipText, sort === 'starred' && styles.chipTextSelected]}
+          >
+            ติดดาว
+          </Chip>
         </View>
+      </View>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#EFB553" />
+        </View>
+      ) : (
+        <FlatList
+          data={filteredPosts}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.content}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#EFB553" />
+          }
+          renderItem={({ item }) => <PostItem post={item} />}
+        />
       )}
-    />
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-  },
-  postContainer: {
-    backgroundColor: '#fff',
-    padding: 14,
-    borderRadius: 12,
-    marginBottom: 12,
-    elevation: 2,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  displayName: {
-    fontFamily: 'NotoSansThai-Regular',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  time: {
-    fontSize: 12,
-    color: '#999',
-  },
-  category: {
-    fontSize: 12,
-    color: '#D84A34',
-    marginBottom: 6,
+    flex: 1,
+    backgroundColor: '#FFF',
   },
   content: {
-    fontSize: 14,
-    fontFamily: 'NotoSansThai-Regular',
-    marginBottom: 10,
+    paddingBottom: 16,
   },
-  actionRow: {
+  filterBar: {
+    padding: 12,
+    backgroundColor: '#FFF',
+  },
+  chipContainer: {
     flexDirection: 'row',
+  },
+  chip: {
+    marginRight: 8,
+    backgroundColor: '#F0F2F5',
+  },
+  chipSelected: {
+    backgroundColor: '#F0F2F5',
+  },
+  chipText: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 14,
+    color: '#333',
+  },
+  chipTextSelected: {
+    color: '#333',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  actionText: {
-    marginLeft: 4,
-    fontSize: 14,
-    fontFamily: 'NotoSansThai-Regular',
-  },
 });
+
+export default MockFeed;

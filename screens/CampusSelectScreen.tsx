@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { styles } from '@styles/campusSelectStyles';
 import { useCampus } from '../contexts/CampusContext'; 
+import { useUser } from '../contexts/UserContext';
 import { RootStackParamList } from '../types';
 import { campuses } from '../constants';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +16,26 @@ interface CampusSelectScreenProps {
 }
 
 const CampusSelectScreen: React.FC<CampusSelectScreenProps> = ({ navigation }) => {
-  const { setCampus } = useCampus(); 
+  const { setCampus: setContextCampus } = useCampus(); 
+  const { userProfile, setUserProfile } = useUser();
 
-  const handleSelectCampus = (campus: string) => {
-    setCampus(campus); 
+  const handleSelectCampus = async (campus: string) => {
+    setContextCampus(campus); 
+
+    if (userProfile) {
+      setUserProfile({
+        ...userProfile,          
+        campus: campus,
+      });
+    }
+
+    // บันทึก campus ใน AsyncStorage
+    try {
+      await AsyncStorage.setItem('selectedCampus', campus);
+    } catch (error) {
+      console.error('Error saving campus to AsyncStorage:', error);
+    }
+
     navigation.navigate('SetDisplayName', { campus });
   };
 

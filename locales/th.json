@@ -1,9 +1,17 @@
 {
-    "profile": "โปรไฟล์",
-    "settings": "ตั้งค่า",
-    "change_language": "เปลี่ยนภาษา",
+    "settings": "การตั้งค่า",
+    "language": "ภาษา",
+    "thai": "ไทย (TH)",
+    "english": "อังกฤษ (EN-US)",
+    "notifications": "การแจ้งเตือน",
+    "enableNotifications": "เปิดใช้งานการแจ้งเตือน",
+    "security": "ความปลอดภัย",
+    "enablePin": "เข้าใช้งานด้วยรหัส PIN",
+    "contactUs": "ติดต่อเรา",
+    "email": "Email: support@example.com",
+    "phone": "เบอร์โทรศัพท์: 02-123-4567",
     "logout": "ออกจากระบบ",
-    "edit_name": "เปลี่ยนชื่อ",
-    "change_avatar": "เปลี่ยนรูปโปรไฟล์"
-}
-  
+    "confirmLogout": "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?",
+    "cancel": "ยกเลิก",
+    "loggedOut": "ออกจากระบบสำเร็จ"
+  }

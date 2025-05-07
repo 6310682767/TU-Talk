@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const windowHeight = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,16 +15,18 @@ export const styles = StyleSheet.create({
     fontFamily: 'NotoSansThai-Bold',
     fontSize: 20,
   },
-  scrollView: {
-    flexGrow: 1,
-    alignItems: 'center',
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: '#EFB553',
+  },
+  scrollContent: {
   },
   card: {
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    marginTop: 64,
+    marginTop: 80,
     paddingTop: 80,
     alignItems: 'center',
   },
@@ -33,17 +37,18 @@ export const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: 'white',
     overflow: 'hidden',
+    zIndex: 10,
   },
   avatar: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#eee',
+    backgroundColor: '#eee'
   },
   displayName: {
     fontFamily: 'NotoSansThai-Bold',
     fontSize: 22,
-    color: '#555',
+    color: '#333',
   },
   studentId: {
     fontFamily: 'NotoSansThai-Regular',
@@ -54,20 +59,22 @@ export const styles = StyleSheet.create({
     width: '90%',
   },
   detailRow: {
-    marginBottom: 12,
+    marginBottom: 5,
   },
   detailLabel: {
     fontFamily: 'NotoSansThai-Regular',
     fontSize: 14,
-    color: '#555',
+    color: '#777',
   },
   detailValue: {
     fontFamily: 'NotoSansThai-Regular',
     fontSize: 16,
+    color: '#333',
   },
   tabsContainer: {
     width: '100%',
-    flex: 1,
+    minHeight: windowHeight - 100,
+    backgroundColor: '#FFF',
   },
   tabLabel: {
     fontFamily: 'NotoSansThai-Regular',
@@ -86,5 +93,134 @@ export const styles = StyleSheet.create({
     top: 16,
     right: 16,
     zIndex: 1,
+  },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 6,
+    marginBottom: 16,
+    width: '90%',
+  },
+  followButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#eee',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flex: 1,
+  },
+  starredButton: {
+    backgroundColor: '#ddd',
+  },
+  followButtonText: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 14,
+    color: '#333',
+    textAlign: 'center',
+  },
+  starredButtonText: {
+    color: '#333',
+  },
+  errorText: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  modalOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  modalContainer: {
+    width: '80%',
+    backgroundColor: '#fff', 
+    borderRadius: 16, 
+    padding: 16, 
+    alignItems: 'center',
+    elevation: 5, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  modalHidden: {
+    opacity: 0,
+    transform: [{ translateX: -1000 }, { translateY: -1000 }],
+  },
+  modalVisible: {
+    opacity: 1,
+    transform: [{ translateX: 0 }, { translateY: 0 }], 
+  },
+  modalTitle: {
+    fontFamily: 'NotoSansThai-Bold',
+    fontSize: 18,
+    color: '#333',
+    marginBottom: 16,
+  },
+  modalInput: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 8,
+    padding: 10,
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 8,
+  },
+  charCount: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 14,
+    color: '#666',
+    alignSelf: 'flex-end',
+    marginBottom: 8,
+  },
+  errorMessage: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 14,
+    color: '#D84A34',
+    alignSelf: 'flex-start',
+    marginBottom: 8,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  confirmButton: {
+    backgroundColor: '#D84A34',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flex: 1,
+    marginLeft: 8,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: '#CCC',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flex: 1,
+    marginRight: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontFamily: 'NotoSansThai-Regular',
+    fontSize: 16,
+    color: '#FFF',
+  },
+  disabledButton: {
+    backgroundColor: '#CCC',
   },
 });

@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Appbar } from 'react-native-paper';
 import { useUser } from '../contexts/UserContext';
-import * as ImagePicker from 'expo-image-picker'; 
+import * as ImagePicker from 'expo-image-picker';
 
 const AvatarFullScreen = () => {
   const navigation = useNavigation();
-  const { userProfile } = useUser();
-  const [avatarUri, setAvatarUri] = useState(userProfile?.avatar || 'https://via.placeholder.com/150');
+  const route = useRoute<any>();
+  const { userProfile, updateAvatar } = useUser();
+  const initialAvatarUri = route.params?.uri || userProfile?.avatar || require('../assets/images/Generic avatar.png');
+  const userId = route.params?.userId || userProfile?.userId;
+  const isOwnProfile = userId === userProfile?.userId;
+  const [avatarSource, setAvatarSource] = useState(initialAvatarUri);
+
+  useEffect(() => {
+    if (userProfile?.avatar) {
+      setAvatarSource(
+        typeof userProfile.avatar === 'string' && userProfile.avatar
+          ? { uri: userProfile.avatar }
+          : userProfile.avatar
+      );
+    }
+  }, [userProfile?.avatar]);
 
   const handleChangeAvatar = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -18,7 +32,7 @@ const AvatarFullScreen = () => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'], 
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -26,30 +40,29 @@ const AvatarFullScreen = () => {
 
     if (!result.canceled && result.assets.length > 0) {
       const selectedImageUri = result.assets[0].uri;
-      setAvatarUri(selectedImageUri);
-      // TODO: ส่ง avatar ใหม่ไปเซฟที่ backend หรือ context ตามต้องการ
+      updateAvatar(selectedImageUri);
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Appbar */}
         <Appbar.Header style={styles.appbar}>
           <Appbar.Action icon="close" color="white" onPress={() => navigation.goBack()} />
           <Appbar.Content title="" />
         </Appbar.Header>
 
-        {/* View สำหรับจัดกึ่งกลางไอคอนและปุ่มเมื่อรวมกัน */}
         <View style={styles.centeredContent}>
           <View style={styles.innerContent}>
             <Image
-              source={{ uri: avatarUri }}
+              source={avatarSource}
               style={styles.avatar}
             />
-            <TouchableOpacity style={styles.changeButton} onPress={handleChangeAvatar}>
-              <Text style={styles.changeButtonText}>เปลี่ยนรูปโปรไฟล์</Text>
-            </TouchableOpacity>
+            {isOwnProfile && (
+              <TouchableOpacity style={styles.changeButton} onPress={handleChangeAvatar}>
+                <Text style={styles.changeButtonText}>เปลี่ยนรูปโปรไฟล์</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
@@ -69,12 +82,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   centeredContent: {
-    flex: 1, // ให้ครอบคลุมพื้นที่ที่เหลือหลังจาก Appbar
-    alignItems: 'center', // กึ่งกลางแนวนอน
-    justifyContent: 'center', // กึ่งกลางแนวตั้ง
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   innerContent: {
-    alignItems: 'center', // ทำให้ไอคอนและปุ่มอยู่ในแนวเดียวกัน
+    alignItems: 'center',
   },
   avatar: {
     width: 360,

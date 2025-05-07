@@ -1,17 +1,17 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-type ForumContextType = {
-  campus: string;
-  setCampus: (campus: string) => void;
-  category: string | null;
-  setCategory: React.Dispatch<React.SetStateAction<string | null>>; 
-};
+interface ForumContextType {
+  campus: string | undefined;
+  category: string | undefined;
+  setCampus: (campus: string | undefined) => void;
+  setCategory: (category: string | undefined) => void;
+}
 
 const ForumContext = createContext<ForumContextType | undefined>(undefined);
 
 export const ForumProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [campus, setCampus] = useState('');
-  const [category, setCategory] = useState<string | null>(null);
+  const [campus, setCampus] = useState<string | undefined>(undefined);
+  const [category, setCategory] = useState<string | undefined>(undefined);
 
   return (
     <ForumContext.Provider value={{ campus, category, setCampus, setCategory }}>
@@ -20,8 +20,10 @@ export const ForumProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
-export const useForum = (): ForumContextType => {
+export const useForum = () => {
   const context = useContext(ForumContext);
-  if (!context) throw new Error('useForum must be used within a ForumProvider');
+  if (!context) {
+    throw new Error('useForum must be used within a ForumProvider');
+  }
   return context;
 };

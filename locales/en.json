@@ -1,8 +1,17 @@
 {
-    "profile": "Profile",
     "settings": "Settings",
-    "change_language": "Change Language",
+    "language": "Language",
+    "thai": "Thai (TH)",
+    "english": "English (EN-US)",
+    "notifications": "Notifications",
+    "enableNotifications": "Enable Notifications",
+    "security": "Security",
+    "enablePin": "Enable PIN Login",
+    "contactUs": "Contact Us",
+    "email": "Email: support@example.com",
+    "phone": "Phone: 02-123-4567",
     "logout": "Logout",
-    "edit_name": "Edit Name",
-    "change_avatar": "Change Avatar"
-}
+    "confirmLogout": "Are you sure you want to log out?",
+    "cancel": "Cancel",
+    "loggedOut": "Logged out successfully"
+  }

@@ -11,16 +11,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  placeholder: {
-    width: 48, // Match the typical width of Appbar.Action (icon + padding)
-  },
   titleContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start', 
+    paddingLeft: 16,        
   },
   appbarTitle: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: 'NotoSansThai-Bold',
   },
   notificationList: {
@@ -38,9 +36,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
     padding: 15,
     marginBottom: 10,
+    marginHorizontal: 10,
     borderRadius: 16,
     alignItems: 'center',
-    marginHorizontal: 10,
   },
   unreadNotification: {
     backgroundColor: '#e8f0fe',

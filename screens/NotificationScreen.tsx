@@ -109,7 +109,6 @@ const NotificationScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.appbar}>
-        <View style={styles.placeholder} />
         <View style={styles.titleContainer}>
           <Text style={styles.appbarTitle}>การแจ้งเตือน</Text>
         </View>

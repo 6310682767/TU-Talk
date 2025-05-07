@@ -3,19 +3,16 @@ import { StyleSheet } from 'react-native';
 const SettingsStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   appbar: {
     backgroundColor: '#EFB553',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: 56,
   },
   appbarCenter: {
     flex: 1,
-    alignItems: 'center',
-    marginRight: 48,
   },
   appbarTitle: {
     color: '#fff',
@@ -23,40 +20,48 @@ const SettingsStyles = StyleSheet.create({
     fontFamily: 'NotoSansThai-Bold',
   },
   content: {
-    padding: 16,
+    padding: 12,
     backgroundColor: '#fff',
     flexGrow: 1,
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
   sectionLabel: {
     fontSize: 18,
     fontFamily: 'NotoSansThai-Bold',
-    marginBottom: 8,
-    marginHorizontal: 12,
-    color: '#555',
+    marginBottom: 10,
+    marginVertical: 4,
+    marginHorizontal: 10,
+    color: '#333',
   },
   card: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#F0F2F5',
     borderRadius: 16,
-    paddingVertical: 4,
+    paddingVertical: 8, 
     paddingHorizontal: 8,
-    marginHorizontal: 4,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    minHeight: 48, 
+    paddingVertical: 6, 
+    marginRight: 12,
+    minHeight: 56, 
   },
   rowText: {
     flex: 1,
     fontSize: 18,
     fontFamily: 'NotoSansThai-Regular',
-    marginLeft: 18,
+    marginLeft: 16,
     color: '#333',
+  },
+  icon: {
+    width: 32,
+    height: 32,
+    marginLeft: 12, 
+  },
+  switch: {
+    marginLeft: 12, 
   },
   logoutButton: {
     backgroundColor: '#D84A34',
@@ -68,12 +73,13 @@ const SettingsStyles = StyleSheet.create({
   logoutButtonText: {
     color: '#fff',
     fontFamily: 'NotoSansThai-Bold',
-    fontSize: 16,
+    fontSize: 18,
   },
   tick: {
     fontSize: 18,
-    color: '#999', 
-    alignSelf: 'center', 
+    fontFamily: 'NotoSansThai-Regular', 
+    color: '#999',
+    alignSelf: 'center',
   },
 });
 
